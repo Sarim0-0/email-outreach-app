@@ -1,0 +1,20 @@
+{
+  "sheet_url": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_HERE/edit",
+  "contacts_sheet_name": "auto",
+  "email_column": "email",
+  "control_sheet_name": "Control",
+  "analytics_sheet_name": "Analytics",
+  "sender_name": "Your Name",
+  "email_subject": "Quick note for {{company}}",
+  "email_template_path": "templates/email.html",
+  "campaign_template_paths": [
+    "templates/email.html"
+  ],
+  "attachment_path": "",
+  "tracking_base_url": "",
+  "timezone": "Asia/Karachi",
+  "batch_size": 5,
+  "daily_send_cap": 500,
+  "min_delay_minutes": 10,
+  "max_delay_minutes": 15
+}

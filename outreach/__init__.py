@@ -1,0 +1,2 @@
+"""Personal email outreach tool."""
+

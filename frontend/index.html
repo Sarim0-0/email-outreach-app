@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Email Outreach</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <div>
+            <h1>Email Outreach</h1>
+            <span id="credentialSummary" class="soft-label">Checking credentials</span>
+          </div>
+        </div>
+
+        <section class="connection-card">
+          <div class="credential-row">
+            <span>Google Sheets</span>
+            <strong id="sheetsCredential">-</strong>
+          </div>
+          <div class="credential-row">
+            <span>Gmail sender</span>
+            <strong id="gmailCredential">-</strong>
+          </div>
+        </section>
+
+        <div class="sidebar-section">
+          <div class="sidebar-heading">
+            <span>Templates</span>
+            <button id="newTemplate" type="button">New</button>
+          </div>
+          <nav id="templateList" class="template-list" aria-label="Saved templates"></nav>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="commandbar">
+          <div>
+            <span class="eyebrow">Campaign workspace</span>
+            <h2 id="activeTemplateTitle">Campaign</h2>
+            <div class="badge-row">
+              <span id="batchBadge" class="badge">Batch 5</span>
+              <span id="capBadge" class="badge">500/day</span>
+              <span id="delayBadge" class="badge">10-15 min</span>
+            </div>
+          </div>
+          <div class="command-actions">
+            <button id="saveAll" class="primary" type="button">Save Campaign</button>
+          </div>
+        </header>
+
+        <div class="content-grid">
+          <section class="panel setup-panel">
+            <div class="panel-header">
+              <span class="step">1</span>
+              <div>
+                <h3>Audience</h3>
+                <span class="panel-kicker">Sheet and recipient mapping</span>
+              </div>
+              <button id="loadSheet" type="button">Load Sheet</button>
+            </div>
+
+            <label>
+              Google Sheet link
+              <input id="sheet_url" placeholder="https://docs.google.com/spreadsheets/d/.../edit" />
+            </label>
+
+            <div class="field-row">
+              <label>
+                Contacts tab
+                <select id="contacts_sheet_name"></select>
+              </label>
+              <label>
+                Email column
+                <select id="email_column"></select>
+              </label>
+            </div>
+
+            <div class="field-row compact">
+              <label>
+                Control tab
+                <input id="control_sheet_name" placeholder="Control" />
+              </label>
+              <label>
+                Analytics tab
+                <input id="analytics_sheet_name" placeholder="Analytics" />
+              </label>
+            </div>
+
+            <div class="panel-divider"></div>
+
+            <div class="panel-header slim">
+              <span class="step">2</span>
+              <div>
+                <h3>Campaign Rules</h3>
+                <span class="panel-kicker">Batch timing and reusable assets</span>
+              </div>
+              <button id="setupSheet" type="button">Set Up Sheet</button>
+            </div>
+
+            <label>
+              Sender name
+              <input id="sender_name" placeholder="Your Name" />
+            </label>
+
+            <div class="attachment-box">
+              <div>
+                <span class="soft-label">Attachment for every email</span>
+                <strong id="attachmentName">No attachment</strong>
+                <span id="attachmentMeta" class="soft-label"></span>
+              </div>
+              <div class="attachment-actions">
+                <button id="attachmentPick" type="button">Attach File</button>
+                <button id="attachmentRemove" type="button">Remove</button>
+              </div>
+              <input id="attachmentFile" type="file" hidden />
+            </div>
+
+            <div class="number-grid">
+              <label>
+                Batch size
+                <input id="batch_size" type="number" min="1" max="5" />
+              </label>
+              <label>
+                Daily cap
+                <input id="daily_send_cap" type="number" min="1" max="500" />
+              </label>
+              <label>
+                Min delay
+                <input id="min_delay_minutes" type="number" min="1" />
+              </label>
+              <label>
+                Max delay
+                <input id="max_delay_minutes" type="number" min="1" />
+              </label>
+            </div>
+
+            <label>
+              Timezone
+              <input id="timezone" placeholder="Asia/Karachi" />
+            </label>
+
+            <div class="rotation-box">
+              <div class="section-title">
+                <h3>Batch Template Rotation</h3>
+                <span id="selectedTemplateCount" class="soft-label">0 selected</span>
+              </div>
+              <div id="campaignTemplates" class="campaign-template-list"></div>
+            </div>
+          </section>
+
+          <section class="panel editor-panel">
+            <div class="panel-header">
+              <span class="step">3</span>
+              <div>
+                <h3>Template Composer</h3>
+                <span class="panel-kicker">Subject and body</span>
+              </div>
+              <button id="saveTemplate" type="button">Save Template</button>
+            </div>
+
+            <div class="template-header">
+              <label>
+                Template name
+                <input id="templateName" placeholder="first outreach" />
+              </label>
+              <label>
+                Subject line
+                <input id="email_subject" placeholder="Quick note for {{Company}}" />
+              </label>
+            </div>
+
+            <div class="toolbar" aria-label="Editor toolbar">
+              <button type="button" data-command="bold"><strong>B</strong></button>
+              <button type="button" data-command="italic"><em>I</em></button>
+              <button type="button" data-command="insertUnorderedList">List</button>
+              <button type="button" id="linkButton">Link</button>
+            </div>
+
+            <div id="editor" class="editor" contenteditable="true" aria-label="Email template editor"></div>
+
+            <div class="placeholder-panel">
+              <div class="section-title">
+                <h3>Sheet Columns</h3>
+                <span id="columnCount" class="soft-label">0</span>
+              </div>
+              <div id="placeholderChips" class="chip-list"></div>
+            </div>
+          </section>
+
+          <aside class="right-rail">
+            <section class="panel stats-panel">
+              <div class="section-title">
+                <h3>Run Status</h3>
+                <span id="setupState" class="soft-label">Not loaded</span>
+              </div>
+              <div class="metric-grid">
+                <div class="metric">
+                  <span>Total</span>
+                  <strong id="metricTotal">0</strong>
+                </div>
+                <div class="metric">
+                  <span>Pending</span>
+                  <strong id="metricPending">0</strong>
+                </div>
+                <div class="metric">
+                  <span>Sent</span>
+                  <strong id="metricSent">0</strong>
+                </div>
+                <div class="metric">
+                  <span>Replies</span>
+                  <strong id="metricReplies">0</strong>
+                </div>
+              </div>
+              <dl class="control-list">
+                <div>
+                  <dt>Paused</dt>
+                  <dd id="controlPaused">-</dd>
+                </div>
+                <div>
+                  <dt>Next send</dt>
+                  <dd id="controlNext">-</dd>
+                </div>
+                <div>
+                  <dt>Today</dt>
+                  <dd id="controlDaily">-</dd>
+                </div>
+              </dl>
+              <div class="send-actions">
+                <button id="dryRun" type="button">Dry Run</button>
+                <button id="sendNow" class="danger" type="button">Send Batch</button>
+              </div>
+            </section>
+
+            <section class="panel preview-panel">
+              <div class="section-title">
+                <h3>Live Preview</h3>
+                <span id="previewRow" class="soft-label">No row</span>
+              </div>
+              <div id="previewSubject" class="preview-subject"></div>
+              <iframe id="previewFrame" title="Rendered email preview"></iframe>
+            </section>
+
+            <section class="panel log-panel">
+              <div class="section-title">
+                <h3>Activity</h3>
+                <div id="status" class="status" role="status"></div>
+              </div>
+              <pre id="activityLog"></pre>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <div id="autocomplete" class="autocomplete" hidden></div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

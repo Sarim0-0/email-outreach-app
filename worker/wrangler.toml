@@ -1,0 +1,9 @@
+name = "email-outreach-tracker"
+main = "src/index.js"
+compatibility_date = "2026-07-05"
+
+[vars]
+CONTACTS_SHEET_NAME = "auto"
+# You can use either SHEET_ID or SHEET_URL. SHEET_URL is easier to paste.
+# SHEET_URL = "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_HERE/edit"
+# SHEET_ID = "YOUR_SHEET_ID_HERE"
