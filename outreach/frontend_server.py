@@ -79,13 +79,15 @@ def write_json(path: Path, payload: dict) -> None:
 
 
 def write_config(payload: dict) -> Path:
+    written_path = LOCAL_CONFIG_PATH
     try:
         write_json(CONFIG_PATH, payload)
-        return CONFIG_PATH
+        written_path = CONFIG_PATH
     except OSError:
         LOCAL_STATE_DIR.mkdir(parents=True, exist_ok=True)
-        write_json(LOCAL_CONFIG_PATH, payload)
-        return LOCAL_CONFIG_PATH
+    LOCAL_STATE_DIR.mkdir(parents=True, exist_ok=True)
+    write_json(LOCAL_CONFIG_PATH, payload)
+    return written_path
 
 
 def safe_template_path(name: str) -> Path:
